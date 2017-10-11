@@ -34,7 +34,7 @@ export default class BorrowRN extends Component {
                     selected={this.state.selectedTab === 'home'}
                     title="首页"
                     renderIcon={() => <Image style={styles.icon}
-                                             source={require('./././img/home_icon.png')}
+                                             source={require('./img/home_icon.png')}
                                              resizeMode = "contain"/>}
                     renderSelectedIcon={() => <Image style={styles.icon}
                                                      source={require('./././img/home_selected.png')}
