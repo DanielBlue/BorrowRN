@@ -12,9 +12,10 @@ export default class HomePage extends Component {
 
     constructor(props) {
         super(props);
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: null
+            dataSource: new ListView.DataSource({
+                rowHasChanged: (row1, row2)=>row1 !== row2,
+            })
         };
     }
 
@@ -23,10 +24,10 @@ export default class HomePage extends Component {
             <View style={styles.container}>
                 <Top/>
                 <RadioGroup/>
-                {/*<ListView*/}
-                {/*dataSource={this.state.dataSource}*/}
-                {/*renderRow={(rowData) => <Text style={[{fontSize:25}]}>{rowData==null?"":rowData.loan_title}</Text>}*/}
-                {/*/>*/}
+                <ListView
+                dataSource={this.state.dataSource}
+                renderRow={(rowData) => <Text style={[{fontSize:25}]}>{rowData==null?"":rowData.loan_title}</Text>}
+                />
             </View>
         );
     }
@@ -35,9 +36,7 @@ export default class HomePage extends Component {
         fetch('https://licai.hjd360.com/new/search/index')
             .then((response) => response.json())//回调结果，并转换为json对象 es6写法
             .then((responseJson) => {
-                // this.setState({
-                //     dataSource:responseJson.data.list
-                // })
+                this.state.dataSource.cloneWithRows(responseJson.data.list);
                 console.log(responseJson)
             })
             .catch((error) => {
